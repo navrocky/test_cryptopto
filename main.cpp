@@ -1,6 +1,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <vector>
+#include <algorithm>
 
 #include <cpcsp/CSP_WinCrypt.h>
 #include <cpcsp/CSP_WinDef.h>
@@ -74,6 +75,11 @@ int main(int argc, char* argv[])
         throw std::runtime_error("CryptSignHash");
 
     writeFile("signature", signature);
+    
+    std::reverse(signature.begin(), signature.end());
+    
+    // перевернутая подпись внезапно проходит валидацию через openssl
+    writeFile("reversed_signature", signature);
 
     return 0;
 }
